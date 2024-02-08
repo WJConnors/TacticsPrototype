@@ -53,7 +53,6 @@ public class EnemyController : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Triggered");
         if (other.gameObject.CompareTag("Unit"))
         {
             Destroy(other.gameObject); // Destroy the unit

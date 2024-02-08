@@ -61,10 +61,12 @@ public class RTSController : MonoBehaviour
             {
                 foreach (var unit in selectedUnits)
                 {
-                    NavMeshAgent agent = unit.GetComponent<NavMeshAgent>();
-                    if (agent != null)
+                    if (unit != null)
                     {
-                        agent.destination = hit.point;
+                        if (unit.TryGetComponent<NavMeshAgent>(out var agent))
+                        {
+                            agent.destination = hit.point;
+                        }
                     }
                 }
             }
@@ -155,11 +157,14 @@ public class RTSController : MonoBehaviour
     {
         foreach (var unit in selectedUnits)
         {
-            foreach (Transform child in unit.transform)
+            if (unit.TryGetComponent<NavMeshAgent>(out var agent))
             {
-                if (child.CompareTag("SelectionCircle")) // Ensure the tag matches your prefab
+                foreach (Transform child in unit.transform)
                 {
-                    Destroy(child.gameObject);
+                    if (child.CompareTag("SelectionCircle")) // Ensure the tag matches your prefab
+                    {
+                        Destroy(child.gameObject);
+                    }
                 }
             }
         }
